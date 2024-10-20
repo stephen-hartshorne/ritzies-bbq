@@ -1,7 +1,18 @@
 export default function AboutUs() {
   return (
       <div className="flex h-full justify-center items-center">
-        Hey yo its Travis and Paige
+        <div className="flex flex-col items-center w-1/2 indent-4">
+          <p className="text-r-text text-xl">
+            Hi! We are Travis and Paige Ritzie and we have been lifelong food enthusiasts.
+            Our passion for barbecue started during the pandemic when we utilized outdoor cooking to connect with family and friends. 
+          </p>
+          <p className="mt-3 text-r-text text-xl">
+            Things got pretty serious two years later when Travis found a Texas bbq spot with openings, one that just so happened to be world-renowned. 
+            Leroy and Lewis adopted both of us and shaped our customer service and live-fire cooking skills and allowed us to move to Memphis and bridge the barbecue gap. 
+            Ritzies Barbecue aims to serve the best of both styles so you don’t have to choose. 
+            Follow along as we start our journey with barbecue at different 901 spots!
+          </p>
+        </div>
       </div>
   );
 }
