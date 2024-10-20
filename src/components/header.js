@@ -19,12 +19,8 @@ export default function Header() {
       <Link href="/about-us">About Us</Link>
       <Link href="/menu">Menu</Link>
       <div className="flex">
-        <Link className="mr-3" href="https://www.instagram.com/ritziesbarbecue/profilecard/?igsh=emN0MnVsbTE2ejZh">
-          <InstagramIcon />
-        </Link>
-        <Link href="https://www.facebook.com/profile.php?id=61565572948008&mibextid=LQQJ4d">
-          <FacebookIcon />
-        </Link>
+        <InstagramIcon />
+        <FacebookIcon />
       </div>
     </nav>
   );

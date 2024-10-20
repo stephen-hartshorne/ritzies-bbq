@@ -16,11 +16,7 @@ module.exports = {
     colors: {
       'r-cream': '#e4dbc8',
       'r-green': '#43453d',
-      'r-text': '#6B3E26'
-    },
-    fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+      'r-text': '#6B3E26',
     },
   },
   plugins: [],
