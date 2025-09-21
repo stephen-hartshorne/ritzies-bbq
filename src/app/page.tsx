@@ -149,6 +149,7 @@ export default function Home() {
           <nav className="space-x-6 text-base font-medium hidden md:block">
             <a href="#menu" onClick={(e) => handleMenuClick(e, '#menu')} className="hover:text-black">Menu</a>
             <a href="#about" onClick={(e) => handleMenuClick(e, '#about')} className="hover:text-black">About</a>
+            <a href="#location" onClick={(e) => handleMenuClick(e, '#location')} className="hover:text-black">Location</a>
             <a href="#gallery" onClick={(e) => handleMenuClick(e, '#gallery')} className="hover:text-black">Gallery</a>
             <a href="#social" onClick={(e) => handleMenuClick(e, '#social')} className="hover:text-black">Social</a>
           </nav>
@@ -172,6 +173,7 @@ export default function Home() {
         >
           <a href="#menu" onClick={(e) => handleMenuClick(e, '#menu')} className="py-2 text-base text-[#43453d] hover:text-black">Menu</a>
           <a href="#about" onClick={(e) => handleMenuClick(e, '#about')} className="py-2 text-base text-[#43453d] hover:text-black">About</a>
+          <a href="#location" onClick={(e) => handleMenuClick(e, '#location')} className="py-2 text-base text-[#43453d] hover:text-black">Location</a>
           <a href="#gallery" onClick={(e) => handleMenuClick(e, '#gallery')} className="py-2 text-base text-[#43453d] hover:text-black">Gallery</a>
           <a href="#social" onClick={(e) => handleMenuClick(e, '#social')} className="py-2 text-base text-[#43453d] hover:text-black">Social</a>
         </div>
@@ -251,6 +253,41 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Image src="/about-us-couple.jfif" alt="Owners Smiling" width={500} height={350} className="rounded-xl shadow-lg object-cover" />
               <Image src="/3amigos.jpg" alt="The 3 Amigos" width={500} height={350} className="rounded-xl shadow-lg object-cover" />
+            </div>
+          </section>
+        </ScrollFadeIn>
+
+        {/* LOCATION SECTION */}
+        <ScrollFadeIn>
+          <section id="location" className={`${scrollMt} bg-[#43453d] text-[#e4dbc8] py-16 px-4`}>
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-4xl font-bold mb-8 font-[theme(font.heading)]">Location & Hours</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-semibold mb-4 text-[#e4dbc8] font-[theme(font.heading)]">Address</h3>
+                  <div className="text-lg font-[theme(font.body)] space-y-1">
+                    <p>5669 Quince Rd</p>
+                    <p>Memphis, TN 38119</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-semibold mb-4 text-[#e4dbc8] font-[theme(font.heading)]">Hours</h3>
+                  <div className="text-lg font-[theme(font.body)] space-y-2">
+                    <div className="flex justify-between">
+                      <span>Thursday:</span>
+                      <span>5-9pm</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Friday & Saturday:</span>
+                      <span>11a-sellout</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday-Wednesday:</span>
+                      <span>Closed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         </ScrollFadeIn>
