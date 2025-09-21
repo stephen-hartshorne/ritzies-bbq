@@ -41,6 +41,7 @@ export default function Home() {
     };
   }, [mobileMenuOpen]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxType, setLightboxType] = useState<'menu' | 'gallery' | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
@@ -52,29 +53,45 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const openLightbox = (index: number) => {
+  const openMenuLightbox = (index: number) => {
     if (!isMobile) {
       setLightboxIndex(index);
+      setLightboxType('menu');
+    }
+  };
+
+  const openGalleryLightbox = (index: number) => {
+    if (!isMobile) {
+      setLightboxIndex(index);
+      setLightboxType('gallery');
     }
   };
 
   const closeLightbox = () => {
     setLightboxIndex(null);
+    setLightboxType(null);
   };
 
   const prevImage = () => {
     setLightboxIndex((prev) => {
       if (prev === null) return 0;
-      return prev === 0 ? galleryImages.length - 1 : prev - 1;
+      const maxLength = lightboxType === 'menu' ? menuImages.length : galleryImages.length;
+      return prev === 0 ? maxLength - 1 : prev - 1;
     });
   };
 
   const nextImage = () => {
     setLightboxIndex((prev) => {
       if (prev === null) return 0;
-      return prev === galleryImages.length - 1 ? 0 : prev + 1;
+      const maxLength = lightboxType === 'menu' ? menuImages.length : galleryImages.length;
+      return prev === maxLength - 1 ? 0 : prev + 1;
     });
   };
+
+  const menuImages = [
+    { src: '/thursday-menu.jpg', alt: 'Thursday Menu' },
+    { src: '/weekend-menu.jpg', alt: 'Weekend Menu' }
+  ];
 
   const galleryImages = [
     // Smoker / Cooking Process
@@ -107,6 +124,7 @@ export default function Home() {
     // { src: '/trailer-2.jpg', alt: 'Smoker Trailer' },
     // { src: '/trailer-1.jpg', alt: 'Smoker in Action' }
   ];
+
 
   const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
@@ -179,6 +197,14 @@ export default function Home() {
               <p className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Bridging the barbecue gap</p>
               <p className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Texas meets Memphis</p>
             </div>
+            <div className="flex space-x-6 mt-6">
+              <a href="https://www.facebook.com/profile.php?id=61565572948008" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/80 hover:text-white text-3xl transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                <FaFacebook />
+              </a>
+              <a href="https://www.instagram.com/ritziesbarbecue/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/80 hover:text-white text-3xl transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                <FaInstagram />
+              </a>
+            </div>
           </div>
         </section>
 
@@ -187,10 +213,19 @@ export default function Home() {
           <section id="menu" className={`${scrollMt} bg-[#43453d] text-[#e4dbc8] py-16 px-4 animate-fade-in-up`}>
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-4xl font-bold mb-4 font-[theme(font.heading)]">Menu</h2>
-              <p className="text-lg mb-6">Check our <a onClick={(e) => handleMenuClick(e, '#social')} className="cursor-pointer underline text-white">Instagram</a> and <a onClick={(e) => handleMenuClick(e, '#social')} className="cursor-pointer underline text-white">Facebook</a> for today’s offerings and locations!</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Image src="/food-plate-5.jpg" alt="BBQ Plate Option 1" width={600} height={400} className="rounded-xl shadow-lg w-full object-cover" />
-                <Image src="/food-plate-6.jpg" alt="BBQ Plate Option 2" width={600} height={400} className="rounded-xl shadow-lg w-full object-cover" />
+                <div className="text-center">
+                  <h3 className="text-xl font-semibold mb-3 text-[#e4dbc8]">Thursday Menu</h3>
+                  <div className="cursor-pointer" onClick={() => openMenuLightbox(0)}>
+                    <Image src="/thursday-menu.jpg" alt="Thursday Menu" width={600} height={400} className="rounded-xl shadow-lg w-full object-cover hover:opacity-90 transition-opacity" />
+                  </div>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-xl font-semibold mb-3 text-[#e4dbc8]">Weekend Menu</h3>
+                  <div className="cursor-pointer" onClick={() => openMenuLightbox(1)}>
+                    <Image src="/weekend-menu.jpg" alt="Weekend Menu" width={600} height={400} className="rounded-xl shadow-lg w-full object-cover hover:opacity-90 transition-opacity" />
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -226,7 +261,7 @@ export default function Home() {
             <h2 className="font-[theme(font.heading)] text-4xl font-bold text-center mb-8 transition-opacity duration-700 animate-fade-in">Gallery</h2>
             <div className="hidden md:grid grid-cols-3 gap-6">
               {galleryImages.map((img, index) => (
-                <div key={index} className="cursor-pointer" onClick={() => openLightbox(index)}>
+                <div key={index} className="cursor-pointer" onClick={() => openGalleryLightbox(index)}>
                   <Image src={img.src} alt={img.alt} width={400} height={300} className="rounded-xl w-full h-auto object-cover" />
                 </div>
               ))}
@@ -261,8 +296,8 @@ export default function Home() {
               <button onClick={prevImage} className="cursor-pointer absolute left-4 text-white text-4xl z-50">&#10094;</button>
               <div className="relative w-full max-w-6xl max-h-[90vh] px-4">
                 <img
-                  src={galleryImages[lightboxIndex].src}
-                  alt={galleryImages[lightboxIndex].alt}
+                  src={lightboxType === 'menu' ? menuImages[lightboxIndex].src : galleryImages[lightboxIndex].src}
+                  alt={lightboxType === 'menu' ? menuImages[lightboxIndex].alt : galleryImages[lightboxIndex].alt}
                   className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
                 />
               </div>
