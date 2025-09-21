@@ -1,4 +1,5 @@
 import { Bebas_Neue, Inter } from "next/font/google";
+import { ReactNode } from "react";
 import "./globals.css";
 
 const bebas = Bebas_Neue({ subsets: ['latin'], weight: '400', variable: '--font-heading', });
@@ -9,7 +10,10 @@ export const metadata = {
   description: "I get my weedle on",
 };
 
-export default function RootLayout({ children }) {
+export interface RootLayoutProps {
+  children: ReactNode
+}
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${bebas.variable} ${inter.variable}`}>
       <head>

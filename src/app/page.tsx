@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
 
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
@@ -17,10 +17,14 @@ export default function Home() {
       document.body.style.overflow = '';
     }
 
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
-        !event.target.closest('#mobile-nav-toggle') &&
-        !event.target.closest('#mobile-nav-menu')
+        !event.target ||
+        !(event.target instanceof HTMLElement)
+      ) return;
+      if (
+        !event?.target?.closest('#mobile-nav-toggle') &&
+        !event?.target?.closest('#mobile-nav-menu')
       ) {
         setMobileMenuOpen(false);
       }
@@ -36,8 +40,8 @@ export default function Home() {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [mobileMenuOpen]);
-  const [lightboxIndex, setLightboxIndex] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,7 +52,7 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const openLightbox = (index) => {
+  const openLightbox = (index: number) => {
     if (!isMobile) {
       setLightboxIndex(index);
     }
@@ -59,12 +63,17 @@ export default function Home() {
   };
 
   const prevImage = () => {
-    console.log('setting prev img')
-    setLightboxIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+    setLightboxIndex((prev) => {
+      if (prev === null) return 0;
+      return prev === 0 ? galleryImages.length - 1 : prev - 1;
+    });
   };
 
   const nextImage = () => {
-    setLightboxIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+    setLightboxIndex((prev) => {
+      if (prev === null) return 0;
+      return prev === galleryImages.length - 1 ? 0 : prev + 1;
+    });
   };
 
   const galleryImages = [
@@ -99,7 +108,7 @@ export default function Home() {
     // { src: '/trailer-1.jpg', alt: 'Smoker in Action' }
   ];
 
-  const handleMenuClick = (e, id) => {
+  const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     const section = document.querySelector(id);

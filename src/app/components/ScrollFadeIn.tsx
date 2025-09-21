@@ -2,9 +2,14 @@
 
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
-export default function ScrollFadeIn({ children, delay = 0 }) {
+interface ScrollFadeInProps {
+  children: ReactNode;
+  delay?: number;
+}
+
+export default function ScrollFadeIn({ children, delay = 0 }: ScrollFadeInProps) {
   const controls = useAnimation();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
